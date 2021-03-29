@@ -1,10 +1,11 @@
 from math import sqrt
+import numpy as np
+import numdifftools as nd
 
 
 def dichotomy(f, a, b, eps, comp):
     while abs(a - b) > eps:
         x = (a + b) / 2
-        print(x)
         f1 = f(x - eps)
         f2 = f(x + eps)
         if comp(f1, f2):
@@ -49,6 +50,7 @@ def fib(n):
         return lst
 
 
+# todo: make with eps
 def fibonacci(f, a, b, n, comp):
     F = fib(n)
     x1 = a + (b - a) * F[n-2] / F[n]
@@ -73,5 +75,17 @@ def fibonacci(f, a, b, n, comp):
     return (a + b) / 2
 
 
+# todo: can't find max?
+def gradient_decent(f, x, step_func, eps):
+    fgrad = nd.Gradient(f)
+    while True:
+        alpha = step_func(lambda alpha: f(x - alpha * fgrad(x)), 0, 10, eps, lambda f1, f2: f1 < f2)
+        xnew = x - alpha * fgrad(x)
+        if np.linalg.norm(xnew - x) < eps:
+            return xnew
+        x = xnew
+
+
 print(golden_section(lambda x: x*x-5*x+4, -1, 10, 0.000001, lambda f1, f2: f1 < f2))
 print(fibonacci(lambda x: x*x-5*x+4, -1, 10, 20, lambda f1, f2: f1 < f2))
+print(gradient_decent(lambda x: 10*x[0]*x[0]+x[1]*x[1]+2*x[1], np.array([10, 10.]), dichotomy, 0.00001))
