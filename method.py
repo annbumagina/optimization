@@ -101,12 +101,19 @@ def fibonacci(f, a, b, eps, comp):
     return (a + b) / 2, it, n
 
 
-# todo: can't find max?
-def gradient_decent(f, x, step_func, eps):
+def gradient_decent(f, x, step_func, eps, extremum):
     fgrad = nd.Gradient(f)
+    it = 0
     while True:
-        alpha = step_func(lambda alpha: f(x - alpha * fgrad(x)), 0, 10, eps, lambda f1, f2: f1 < f2)[0]
-        xnew = x - alpha * fgrad(x)
+        it += 1
+
+        if extremum == "min":
+            alpha = step_func(lambda alpha: f(x - alpha * fgrad(x)), 0, 1000, eps, lambda f1, f2: f1 < f2)[0]
+            xnew = x - alpha * fgrad(x)
+        else:
+            alpha = step_func(lambda alpha: f(x + alpha * fgrad(x)), 0, 1000, eps, lambda f1, f2: f1 > f2)[0]
+            xnew = x + alpha * fgrad(x)
+
         if np.linalg.norm(xnew - x) < eps:
-            return xnew
+            return xnew, it
         x = xnew

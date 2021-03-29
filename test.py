@@ -8,6 +8,11 @@ def one_dimension_optimization():
     Tests one dimension methods and prints statistics.
 
     """
+    print("=======================")
+    print("    ONE DIMENTIONAL    ")
+    print("=======================")
+    print()
+
     f = ["lambda x: x*x-5*x+4", "sin", "lambda x: x*x*x-4*x*x+4*x"]
     extremum = [2.5, -pi / 2, 2]
     a = [-1, -pi, 1]
@@ -29,5 +34,32 @@ def one_dimension_optimization():
         print()
 
 
+def gradient_decent_simple():
+    """
+    Tests gradient decent on simple functions and prints statistics.
+
+    """
+    print("=======================")
+    print("       GRADIENT        ")
+    print("=======================")
+    print()
+
+    f = ["lambda x: 10 * x[0] * x[0] + x[1] * x[1] + 2 * x[1]", "lambda x: -1 / (1 + x[0]*x[0] + x[1]*x[1])"]
+    start = [np.array([10, 10.]), np.array([10, -10.])]
+    extremum = [np.array([0, -1.]), np.array([0, 0.])]
+    methods = [dichotomy, golden_section, fibonacci]
+    eps = 0.001
+    for i in range(len(f)):
+        print("function of interest:", f[i])
+        print("dich", "gold", "fib")
+        result = []
+        for method in methods:
+            x, it = gradient_decent(eval(f[i]), start[i], method, eps, "min")
+            assert np.linalg.norm(x - extremum[i]) < 5 * eps
+            result.append(it)
+        print(result)
+        print()
+
+
 one_dimension_optimization()
-print(gradient_decent(lambda x: 10*x[0]*x[0]+x[1]*x[1]+2*x[1], np.array([10, 10.]), dichotomy, 0.00001))
+gradient_decent_simple()
