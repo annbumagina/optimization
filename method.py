@@ -24,13 +24,14 @@ def dichotomy(f, a, b, eps, comp):
         it += 1
         calls += 2
 
-        x = (a + b) / 2
-        f1 = f(x - eps)
-        f2 = f(x + eps)
+        x1 = (a + b) / 2 - eps / 3
+        x2 = (a + b) / 2 + eps / 3
+        f1 = f(x1)
+        f2 = f(x2)
         if comp(f1, f2):
-            b = x
+            b = x2
         else:
-            a = x
+            a = x1
 
     return (a + b) / 2, it, calls
 
