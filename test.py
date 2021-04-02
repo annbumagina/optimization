@@ -1,12 +1,16 @@
 from math import sin, pi
 
-from method import *
+import numpy as np
+
+from gradient.gradient import Gradient
+from methods.dichotomy import DichotomyMethod
+from methods.fibonacci import FibonacciMethod
+from methods.golden_section import GoldenSectionMethod
 
 
 def one_dimension_optimization():
     """
     Tests one dimension methods and prints statistics.
-
     """
     print("=======================")
     print("    ONE DIMENTIONAL    ")
@@ -19,25 +23,23 @@ def one_dimension_optimization():
     b = [10, 0, 10]
     epss = [0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001, 0.0000001]
     comp = lambda f1, f2: f1 < f2
-    methods = [dichotomy, golden_section, fibonacci]
+    method_constructors = [DichotomyMethod, GoldenSectionMethod, FibonacciMethod]
 
     for i in range(len(f)):
         print("function of interest:", f[i])
-        print("eps", "dichotomy", "golden_section", "fibonacci")
-        for eps in epss:
-            result = [eps]
-            for method in methods:
-                x, it, calls = method(eval(f[i]), a[i], b[i], eps, comp)
-                assert abs(x - extremum[i]) < eps
-                result.append((it, calls))
-            print(result)
+        for constructor in method_constructors:
+            print("\tmethod: ", constructor.name())
+            for eps in epss:
+                method = constructor(eval(f[i]), a[i], b[i], eps, comp)
+                method.compute()
+                assert abs(method.result - extremum[i]) < eps
+            print("\tOk")
         print()
 
 
 def gradient_decent_simple():
     """
-    Tests gradient decent on simple functions and prints statistics.
-
+    Tests gradient decent on simple functions and prints statistics
     """
     print("=======================")
     print("       GRADIENT        ")
@@ -47,17 +49,17 @@ def gradient_decent_simple():
     f = ["lambda x: 10 * x[0] * x[0] + x[1] * x[1] + 2 * x[1]", "lambda x: -1 / (1 + x[0]*x[0] + x[1]*x[1])"]
     start = [np.array([10, 10.]), np.array([10, -10.])]
     extremum = [np.array([0, -1.]), np.array([0, 0.])]
-    methods = [dichotomy, golden_section, fibonacci]
+    method_constructors = [DichotomyMethod, GoldenSectionMethod, FibonacciMethod]
     eps = 0.001
     for i in range(len(f)):
         print("function of interest:", f[i])
         print("dich", "gold", "fib")
-        result = []
-        for method in methods:
-            x, it = gradient_decent(eval(f[i]), start[i], method, eps, "min")
-            assert np.linalg.norm(x - extremum[i]) < 5 * eps
-            result.append(it)
-        print(result)
+        for method_constructor in method_constructors:
+            print("\tmethod: ", method_constructor.name())
+            gradient = Gradient(eval(f[i]), start[i], method_constructor, eps, "min")
+            gradient.compute()
+            assert np.linalg.norm(gradient.result - extremum[i]) < eps
+            print("\tOk")
         print()
 
 
