@@ -2,7 +2,7 @@ from typing import Callable
 import numpy as np
 import numdifftools as nd
 
-from methods.abstract_method import AbstractMethod
+from lab1.methods.abstract_method import AbstractMethod
 
 
 class Gradient:

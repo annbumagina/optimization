@@ -1,6 +1,6 @@
 from math import sqrt
 
-from methods.abstract_method import AbstractMethod
+from lab1.methods.abstract_method import AbstractMethod
 
 
 class GoldenSectionMethod(AbstractMethod):

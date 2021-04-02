@@ -1,11 +1,12 @@
-from math import sin, pi
+from math import pi
 
 import numpy as np
+from math import *
 
-from gradient.gradient import Gradient
-from methods.dichotomy import DichotomyMethod
-from methods.fibonacci import FibonacciMethod
-from methods.golden_section import GoldenSectionMethod
+from lab1.gradient.gradient import Gradient
+from lab1.methods.dichotomy import DichotomyMethod
+from lab1.methods.fibonacci import FibonacciMethod
+from lab1.methods.golden_section import GoldenSectionMethod
 
 
 def one_dimension_optimization():

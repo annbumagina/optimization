@@ -1,4 +1,4 @@
-from methods.abstract_method import AbstractMethod
+from lab1.methods.abstract_method import AbstractMethod
 
 
 class DichotomyMethod(AbstractMethod):
