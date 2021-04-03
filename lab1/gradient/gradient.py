@@ -24,6 +24,7 @@ class Gradient:
     def compute(self):
         fgrad = nd.Gradient(self.target)
         x = self.start_point
+        self.history.append(x)
         while True:
             self.it += 1
 
@@ -39,6 +40,8 @@ class Gradient:
 
                 alpha = self.optimize_method(for_optimize, 0, 1000, self.eps, lambda f1, f2: f1 < f2)
                 xnew = x + alpha * fgrad(x)
+
+            self.history.append(xnew)
 
             if np.linalg.norm(xnew - x) < self.eps:
                 self.result = xnew
