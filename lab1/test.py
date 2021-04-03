@@ -4,9 +4,11 @@ import numpy as np
 from math import *
 
 from lab1.gradient.gradient import Gradient
+from lab1.methods.abstract_method import AbstractMethod
 from lab1.methods.dichotomy import DichotomyMethod
 from lab1.methods.fibonacci import FibonacciMethod
 from lab1.methods.golden_section import GoldenSectionMethod
+from lab1.methods.wrapper import wrap_method
 
 
 def one_dimension_optimization():
@@ -33,9 +35,23 @@ def one_dimension_optimization():
             for eps in epss:
                 method = constructor(eval(f[i]), a[i], b[i], eps, comp)
                 method.compute()
+                print("\tEps:", eps, "\tExpected:", extremum[i], "\tActual:", method.result)
                 assert abs(method.result - extremum[i]) < eps
-            print("\tOk")
+            print("\tOk\n")
         print()
+
+
+class FixedStepMethod(AbstractMethod):
+    def __init__(self, target, left, right, eps, compare):
+        super().__init__(target, left, right, eps, compare)
+        self.result = 0.1
+
+    @staticmethod
+    def name():
+        return "fixed step"
+
+    def compute(self):
+        self.result /= 2
 
 
 def gradient_decent_simple():
@@ -54,13 +70,14 @@ def gradient_decent_simple():
     eps = 0.001
     for i in range(len(f)):
         print("function of interest:", f[i])
-        print("dich", "gold", "fib")
         for method_constructor in method_constructors:
             print("\tmethod: ", method_constructor.name())
-            gradient = Gradient(eval(f[i]), start[i], method_constructor, eps, "min")
+            compute_result = wrap_method(method_constructor)
+            gradient = Gradient(eval(f[i]), start[i], compute_result, eps, "min")
             gradient.compute()
+            print("\tEps:", eps, "\tExpected:", extremum[i], "\tActual:", gradient.result)
             assert np.linalg.norm(gradient.result - extremum[i]) < eps
-            print("\tOk")
+            print("\tOk\n")
         print()
 
 

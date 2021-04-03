@@ -9,12 +9,12 @@ class Gradient:
     def __init__(self,
                  target: Callable,
                  start_point: np.ndarray,
-                 method_constructor: Callable,
+                 optimize_method: Callable,
                  eps: float,
                  extremum_type: str):
         self.target = target
         self.start_point = start_point
-        self.method_constructor = method_constructor
+        self.optimize_method = optimize_method
         self.eps = eps
         self.extremum_type = extremum_type
         self.it = 0
@@ -28,20 +28,16 @@ class Gradient:
             self.it += 1
 
             if self.extremum_type == "min":
-                def optimize(t):
+                def for_optimize(t):
                     return self.target(x - t * fgrad(x))
 
-                method: AbstractMethod = self.method_constructor(optimize, 0, 1000, self.eps, lambda f1, f2: f1 < f2)
-                method.compute()
-                alpha = method.result
+                alpha = self.optimize_method(for_optimize, 0, 1000, self.eps, lambda f1, f2: f1 < f2)
                 xnew = x - alpha * fgrad(x)
             else:
-                def optimize(t):
+                def for_optimize(t):
                     return self.target(x + t * fgrad(x))
 
-                method: AbstractMethod = self.method_constructor(optimize, 0, 1000, self.eps, lambda f1, f2: f1 > f2)
-                method.compute()
-                alpha = method.result
+                alpha = self.optimize_method(for_optimize, 0, 1000, self.eps, lambda f1, f2: f1 < f2)
                 xnew = x + alpha * fgrad(x)
 
             if np.linalg.norm(xnew - x) < self.eps:
