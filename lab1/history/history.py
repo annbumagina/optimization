@@ -31,5 +31,7 @@ class History:
         print("Function: " + function)
         print("Eps: " + str(eps))
         print("Expected: " + str(expected) + "\tResult: " + str(result))
+        print("Iterations: " + str(self.iterations))
+        print("Calls: " + str(self.calls))
         print(self.table)
         print()

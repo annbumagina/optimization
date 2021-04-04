@@ -16,14 +16,14 @@ from lab1.history.history import *
 
 
 class AbstractMethod:
-    def __init__(self, target: Callable, left: float, right: float, eps: float, compare: Callable, history=None):
+    def __init__(self, target: Callable, left: float, right: float, eps: float, compare: Callable):
         self.target = target
         self.left = left
         self.right = right
         self.eps = eps
         self.compare = compare
         self.result = None
-        self.history = history
+        self.history = History()
 
     def compute(self):
         pass

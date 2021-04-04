@@ -4,8 +4,8 @@ from lab1.methods.abstract_method import AbstractMethod
 
 
 class GoldenSectionMethod(AbstractMethod):
-    def __init__(self, target, left, right, eps, compare, history):
-        super().__init__(target, left, right, eps, compare, history)
+    def __init__(self, target, left, right, eps, compare):
+        super().__init__(target, left, right, eps, compare)
 
     @staticmethod
     def name():
