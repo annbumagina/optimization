@@ -41,18 +41,21 @@ class GradientHistory:
     def __init__(self):
         self.iterations = 0
         self.points = []
+        self.fgrads = []
         self.derivatives = []
-        self.table = PrettyTable(['Iteration', 'x', 'alpha'])
+        self.table = PrettyTable(['Iteration', 'x', 'fgrad', 'alpha'])
 
-    def add_iteration(self, x, derived):
+    def add_iteration(self, x, fgrad, derived):
         self.iterations = self.iterations + 1
         self.points.append(x)
+        self.fgrads.append(fgrad)
         self.derivatives.append(derived)
 
     def print_history(self, method_name: str, expected, result, eps: float, function: str):
         for i in range(self.iterations):
             self.table.add_row([i,
                                 self.points[i],
+                                self.fgrads[i],
                                 self.derivatives[i]])
 
         print("Method: " + method_name)
