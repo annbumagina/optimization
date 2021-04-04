@@ -18,7 +18,7 @@ class DichotomyMethod(AbstractMethod):
             f1 = self.target(x1)
             f2 = self.target(x2)
 
-            self.history.add_iteration(2, a, b, x1, x2, f1, f2)
+            self.history.add_iteration(2, (a, b), (x1, x2), (f1, f2))
 
             if self.compare(f1, f2):
                 b = x2

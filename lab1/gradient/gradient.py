@@ -19,7 +19,7 @@ class Gradient:
         self.extremum_type = extremum_type
         self.it = 0
         self.result = None
-        self.history = GradientHistory()
+        self.history = GradientHistory(['x', 'fgrad', 'alpha'])
 
     def compute(self):
         fgrad = nd.Gradient(self.target)

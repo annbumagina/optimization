@@ -27,7 +27,7 @@ class FibonacciMethod(AbstractMethod):
         f2 = self.target(x2)
 
         for i in range(1, n):
-            self.history.add_iteration(1, a, b, x1, x2, f1, f2)
+            self.history.add_iteration(1, (a, b), (x1, x2), (f1, f2))
 
             if self.compare(f1, f2):
                 b = x2

@@ -23,7 +23,7 @@ class AbstractMethod:
         self.eps = eps
         self.compare = compare
         self.result = None
-        self.history = History()
+        self.history = History(['Interval', 'points', 'f(points)'])
 
     def compute(self):
         pass
