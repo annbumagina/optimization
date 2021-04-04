@@ -20,7 +20,7 @@ class History:
         self.points.append((x1, x2))
         self.points_values.append((f1, f2))
 
-    def print_history(self, method_name: str, expected: float, result: float, eps: float, function: str):
+    def print_history(self, method_name: str, expected, result, eps: float, function: str):
         for i in range(self.iterations):
             self.table.add_row([i,
                                 self.interval[i],

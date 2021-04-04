@@ -2,7 +2,7 @@ from lab1.methods.abstract_method import AbstractMethod
 
 
 class DichotomyMethod(AbstractMethod):
-    def __init__(self, target, left, right, eps, compare, history=None):
+    def __init__(self, target, left, right, eps, compare, history):
         super().__init__(target, left, right, eps, compare, history)
 
     @staticmethod
@@ -18,8 +18,7 @@ class DichotomyMethod(AbstractMethod):
             f1 = self.target(x1)
             f2 = self.target(x2)
 
-            if self.history is not None:
-                self.history.add_iteration(2, a, b, x1, x2, f1, f2)
+            self.history.add_iteration(2, a, b, x1, x2, f1, f2)
 
             if self.compare(f1, f2):
                 b = x2

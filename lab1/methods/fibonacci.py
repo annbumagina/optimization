@@ -2,7 +2,7 @@ from lab1.methods.abstract_method import AbstractMethod
 
 
 class FibonacciMethod(AbstractMethod):
-    def __init__(self, target, left, right, eps, compare, history=None):
+    def __init__(self, target, left, right, eps, compare, history):
         super().__init__(target, left, right, eps, compare, history)
 
     @staticmethod
@@ -27,8 +27,7 @@ class FibonacciMethod(AbstractMethod):
         f2 = self.target(x2)
 
         for i in range(1, n):
-            if self.history:
-                self.history.add_iteration(1, a, b, x1, x2, f1, f2)
+            self.history.add_iteration(1, a, b, x1, x2, f1, f2)
 
             if self.compare(f1, f2):
                 b = x2
