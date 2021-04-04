@@ -13,13 +13,13 @@ class DichotomyMethod(AbstractMethod):
         a = self.left
         b = self.right
         while abs(a - b) / 2 > self.eps:
-            self.it += 1
-            self.calls += 2
-
             x1 = (a + b) / 2 - self.eps / 3
             x2 = (a + b) / 2 + self.eps / 3
             f1 = self.target(x1)
             f2 = self.target(x2)
+
+            self.history.add_iteration(2, a, b, x1, x2, f1, f2)
+
             if self.compare(f1, f2):
                 b = x2
             else:

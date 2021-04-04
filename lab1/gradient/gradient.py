@@ -2,6 +2,7 @@ from typing import Callable
 import numpy as np
 import numdifftools as nd
 
+from lab1.history.history import History
 from lab1.methods.abstract_method import AbstractMethod
 
 
@@ -19,12 +20,11 @@ class Gradient:
         self.extremum_type = extremum_type
         self.it = 0
         self.result = None
-        self.history = []
+        self.history = History()
 
     def compute(self):
         fgrad = nd.Gradient(self.target)
         x = self.start_point
-        self.history.append(x)
         while True:
             self.it += 1
 
@@ -40,8 +40,6 @@ class Gradient:
 
                 alpha = self.optimize_method(for_optimize, 0, 1000, self.eps, lambda f1, f2: f1 < f2)
                 xnew = x + alpha * fgrad(x)
-
-            self.history.append(xnew)
 
             if np.linalg.norm(xnew - x) < self.eps:
                 self.result = xnew

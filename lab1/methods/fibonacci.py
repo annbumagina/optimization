@@ -25,8 +25,9 @@ class FibonacciMethod(AbstractMethod):
         x2 = a + (b - a) * F[n - 1] / F[n]
         f1 = self.target(x1)
         f2 = self.target(x2)
+
         for i in range(1, n):
-            self.it += 1
+            self.history.add_iteration(1, a, b, x1, x2, f1, f2)
 
             if self.compare(f1, f2):
                 b = x2
@@ -43,5 +44,4 @@ class FibonacciMethod(AbstractMethod):
                     x2 = a + (b - a) * F[n - i - 1] / F[n - i]
                     f2 = self.target(x2)
 
-        self.calls = n
         self.result = (a + b) / 2
