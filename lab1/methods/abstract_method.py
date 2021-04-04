@@ -17,8 +17,6 @@ from lab1.history.history import *
 
 class AbstractMethod:
     def __init__(self, target: Callable, left: float, right: float, eps: float, compare: Callable, history=None):
-        self.it = 0
-        self.calls = 0
         self.target = target
         self.left = left
         self.right = right
