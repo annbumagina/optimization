@@ -18,9 +18,9 @@ class History(AbstractHistory):
     def add_iteration(self, calls: int, *args):
         if len(args) + 1 != self.size:
             return "Incorrect number of arguments"
+        self.columns[0].append(self.iterations)
         self.iterations = self.iterations + 1
         self.calls = self.calls + calls
-        self.columns[0].append(self.iterations)
         for i in range(len(args)):
             self.columns[i + 1].append(args[i])
 
@@ -49,8 +49,8 @@ class GradientHistory(AbstractHistory):
     def add_iteration(self, *args):
         if len(args) + 1 != self.size:
             return "Incorrect number of arguments"
-        self.iterations = self.iterations + 1
         self.columns[0].append(self.iterations)
+        self.iterations = self.iterations + 1
         for i in range(len(args)):
             self.columns[i + 1].append(args[i])
 
