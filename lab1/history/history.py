@@ -35,3 +35,30 @@ class History:
         print("Calls: " + str(self.calls))
         print(self.table)
         print()
+
+
+class GradientHistory:
+    def __init__(self):
+        self.iterations = 0
+        self.points = []
+        self.derivatives = []
+        self.table = PrettyTable(['Iteration', 'x', 'alpha'])
+
+    def add_iteration(self, x, derived):
+        self.iterations = self.iterations + 1
+        self.points.append(x)
+        self.derivatives.append(derived)
+
+    def print_history(self, method_name: str, expected, result, eps: float, function: str):
+        for i in range(self.iterations):
+            self.table.add_row([i,
+                                self.points[i],
+                                self.derivatives[i]])
+
+        print("Method: " + method_name)
+        print("Function: " + function)
+        print("Eps: " + str(eps))
+        print("Expected: " + str(expected) + "\tResult: " + str(result))
+        print("Iterations: " + str(self.iterations))
+        print(self.table)
+        print()

@@ -37,7 +37,6 @@ def one_dimension_optimization():
             for eps in epss:
                 method = constructor(eval(f[i]), a[i], b[i], eps, comp)
                 method.compute()
-                #print("\tEps:", eps, "\tExpected:", extremum[i], "\tActual:", method.result, "\tIterations:", method.it)
                 method.history.print_history(constructor.name(), extremum[i], method.result, eps, f[i])
                 assert abs(method.result - extremum[i]) < eps
             print("\tOk\n")
@@ -78,7 +77,6 @@ def gradient_decent_simple():
             compute_result = wrap_method(method_constructor)
             gradient = Gradient(eval(f[i]), start[i], compute_result, eps, "min")
             gradient.compute()
-            #print("\tEps:", eps, "\tExpected:", extremum[i], "\tActual:", gradient.result)
             gradient.history.print_history(method_constructor.name(), extremum[i], gradient.result, eps, f[i])
             assert np.linalg.norm(gradient.result - extremum[i]) < eps
             print("\tOk\n")
