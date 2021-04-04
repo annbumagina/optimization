@@ -8,6 +8,9 @@ class AbstractHistory:
         self.size = len(columns)
         self.columns = [[None for y in range(0)] for x in range(len(columns))]
 
+    def get_column(self, column_index):
+        return self.columns[column_index]
+
 
 class History(AbstractHistory):
     def __init__(self, columns: list):
