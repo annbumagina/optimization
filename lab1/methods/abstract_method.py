@@ -12,10 +12,11 @@ Results:
     calls   (int): Number of function calls performed.
 """
 from typing import Callable
+from lab1.history.history import *
 
 
 class AbstractMethod:
-    def __init__(self, target: Callable, left: float, right: float, eps: float, compare: Callable):
+    def __init__(self, target: Callable, left: float, right: float, eps: float, compare: Callable, history=None):
         self.it = 0
         self.calls = 0
         self.target = target
@@ -24,6 +25,7 @@ class AbstractMethod:
         self.eps = eps
         self.compare = compare
         self.result = None
+        self.history = history
 
     def compute(self):
         pass

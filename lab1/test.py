@@ -4,6 +4,7 @@ import numpy as np
 from math import *
 
 from lab1.gradient.gradient import Gradient
+from lab1.history.history import *
 from lab1.methods.abstract_method import AbstractMethod
 from lab1.methods.dichotomy import DichotomyMethod
 from lab1.methods.fibonacci import FibonacciMethod
@@ -24,7 +25,8 @@ def one_dimension_optimization():
     extremum = [2.5, -pi / 2, 2]
     a = [-1, -pi, 1]
     b = [10, 0, 10]
-    epss = [0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001, 0.0000001]
+    #epss = [0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001, 0.0000001]
+    epss = [0.1, 0.0001, 0.0000001]
     comp = lambda f1, f2: f1 < f2
     method_constructors = [DichotomyMethod, GoldenSectionMethod, FibonacciMethod]
 
@@ -33,9 +35,10 @@ def one_dimension_optimization():
         for constructor in method_constructors:
             print("\tmethod: ", constructor.name())
             for eps in epss:
-                method = constructor(eval(f[i]), a[i], b[i], eps, comp)
+                method = constructor(eval(f[i]), a[i], b[i], eps, comp, History())
                 method.compute()
-                print("\tEps:", eps, "\tExpected:", extremum[i], "\tActual:", method.result)
+                #print("\tEps:", eps, "\tExpected:", extremum[i], "\tActual:", method.result, "\tIterations:", method.it)
+                method.history.print_history(constructor.name(), extremum[i], method.result, eps, f[i])
                 assert abs(method.result - extremum[i]) < eps
             print("\tOk\n")
         print()
