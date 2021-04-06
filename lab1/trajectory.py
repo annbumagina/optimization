@@ -37,7 +37,7 @@ for i in range(len(all_f)):
         x1_history = list(map(lambda t: t[1], gradient.get_points()))
         pylab.plot(x0_history, x1_history, '-ko')
         pylab.title(f)
-        pylab.savefig("../results/trajectory_%s_%s.png" % (method_constructor.name(), i))
+        pylab.savefig("results/trajectory_%s_%s.png" % (method_constructor.name(), i))
         pylab.close()
 
 
