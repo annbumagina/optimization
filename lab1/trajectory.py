@@ -14,14 +14,13 @@ def makeData(func, x_range):
     return xgrid, zgrid
 
 
-all_f = ["lambda x: 10 * x[0] * x[0] + x[1] * x[1] + 2 * x[1]",
-         "lambda x: x[0] * x[0] + 20 * x[1] * x[1]",
-         "lambda x: -1 / (1 + x[0]*x[0] + x[1]*x[1])"]
-start = [np.array([10, 10.]), np.array([3, -3.]), np.array([3, -3.])]
-extremum = [np.array([0, -1.]), np.array([0, 0.]), np.array([0, 0.])]
+all_f = ["lambda x: x[0]*x[0] + x[1]*x[1]",
+         "lambda x: 10 * x[0] * x[0] + x[1] * x[1] + 2 * x[1]",
+         "lambda x: x[0] * x[0] + 20 * x[1] * x[1]"]
+start = [np.array([10., 10.]), np.array([10., 10.]), np.array([10, 10.])]
 x_ranges = [[np.arange(-15, 15.05, 0.05), np.arange(-15, 15.05, 0.05)],
-            [np.arange(-5, 5.05, 0.05), np.arange(-5, 5.05, 0.05)],
-            [np.arange(-5, 5.05, 0.05), np.arange(-5, 5.05, 0.05)]]
+            [np.arange(-15, 15.05, 0.05), np.arange(-15, 15.05, 0.05)],
+            [np.arange(-15, 15.05, 0.05), np.arange(-15, 15.05, 0.05)]]
 
 method_constructors = [DichotomyMethod, GoldenSectionMethod, FibonacciMethod]
 eps = 0.001
