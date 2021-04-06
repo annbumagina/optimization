@@ -10,23 +10,24 @@ from lab1.methods.wrapper import wrap_method
 
 def makeData(func, x_range):
     xgrid = np.array(np.meshgrid(x_range[0], x_range[1]))
-    print(xgrid)
-
     zgrid = func(xgrid)
-    print(zgrid)
     return xgrid, zgrid
 
 
-all_f = ["lambda x: 10 * x[0] * x[0] + x[1] * x[1] + 2 * x[1]", "lambda x: -1 / (1 + x[0]*x[0] + x[1]*x[1])"]
-start = [np.array([10, 10.]), np.array([3, -3.])]
-extremum = [np.array([0, -1.]), np.array([0, 0.])]
+all_f = ["lambda x: 10 * x[0] * x[0] + x[1] * x[1] + 2 * x[1]",
+         "lambda x: x[0] * x[0] + 20 * x[1] * x[1]",
+         "lambda x: -1 / (1 + x[0]*x[0] + x[1]*x[1])"]
+start = [np.array([10, 10.]), np.array([3, -3.]), np.array([3, -3.])]
+extremum = [np.array([0, -1.]), np.array([0, 0.]), np.array([0, 0.])]
 x_ranges = [[np.arange(-15, 15.05, 0.05), np.arange(-15, 15.05, 0.05)],
+            [np.arange(-5, 5.05, 0.05), np.arange(-5, 5.05, 0.05)],
             [np.arange(-5, 5.05, 0.05), np.arange(-5, 5.05, 0.05)]]
 
 method_constructors = [DichotomyMethod, GoldenSectionMethod, FibonacciMethod]
 eps = 0.001
 for i in range(len(all_f)):
     f = all_f[i]
+    print("Compute: ", f)
     for method_constructor in method_constructors:
         compute_result = wrap_method(method_constructor)
         gradient = Gradient(eval(f), start[i], compute_result, eps, "min")
@@ -39,5 +40,3 @@ for i in range(len(all_f)):
         pylab.title(f)
         pylab.savefig("results/trajectory_%s_%s.png" % (method_constructor.name(), i))
         pylab.close()
-
-

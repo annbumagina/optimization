@@ -8,8 +8,8 @@ from lab1.methods.wrapper import wrap_method
 
 eps = 0.001
 
-k_list = [1.0 * t for t in range(1, 6)]
-n_list = [t for t in range(2, 6)]
+k_list = [1.0 * t for t in range(1, 11)]
+n_list = [t for t in range(2, 11)]
 
 column_list = list(map(str, k_list))
 column_list.insert(0, "n \\ k")
