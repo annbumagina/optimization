@@ -17,6 +17,9 @@ def makeData(func, x_range):
 all_f = ["lambda x: x[0]*x[0] + x[1]*x[1]",
          "lambda x: 10 * x[0] * x[0] + x[1] * x[1] + 2 * x[1]",
          "lambda x: x[0] * x[0] + 20 * x[1] * x[1]"]
+f_titles = ["f(x,y) = x^2 + y^2",
+            "f(x, y) = 10 * x^2 + y^2 + 2 * y",
+            "f(x, y) = x^2 + 20 * y^2"]
 start = [np.array([10., 10.]), np.array([10., 10.]), np.array([10, 10.])]
 x_ranges = [[np.arange(-15, 15.05, 0.05), np.arange(-15, 15.05, 0.05)],
             [np.arange(-15, 15.05, 0.05), np.arange(-15, 15.05, 0.05)],
@@ -36,6 +39,6 @@ for i in range(len(all_f)):
         x0_history = list(map(lambda t: t[0], gradient.get_points()))
         x1_history = list(map(lambda t: t[1], gradient.get_points()))
         pylab.plot(x0_history, x1_history, '-ko')
-        pylab.title(f)
+        pylab.title(f_titles[i] + "\n" + method_constructor.name())
         pylab.savefig("results/trajectory_%s_%s.png" % (method_constructor.name(), i))
         pylab.close()
