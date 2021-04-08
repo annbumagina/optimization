@@ -1,4 +1,5 @@
 from lab1.methods.abstract_method import AbstractMethod
+from lab1.history.history import History
 
 
 class DichotomyMethod(AbstractMethod):
@@ -18,7 +19,10 @@ class DichotomyMethod(AbstractMethod):
             f1 = self.target(x1)
             f2 = self.target(x2)
 
-            self.history.add_iteration(2, (a, b), (x1, x2), (f1, f2))
+            self.history.add_iteration(2,
+                                       History.pair_format((a, b)),
+                                       History.pair_format((x1, x2)),
+                                       History.pair_format((f1, f2)))
 
             if self.compare(f1, f2):
                 b = x2
