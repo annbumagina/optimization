@@ -1,6 +1,7 @@
 from math import sqrt
 
 from lab1.methods.abstract_method import AbstractMethod
+from lab1.history.history import History
 
 
 class GoldenSectionMethod(AbstractMethod):
@@ -23,7 +24,10 @@ class GoldenSectionMethod(AbstractMethod):
         f1 = self.target(x1)
         f2 = self.target(x2)
         while abs(a - b) / 2 > self.eps:
-            self.history.add_iteration(1, (a, b), (x1, x2), (f1, f2))
+            self.history.add_iteration(1,
+                                       History.pair_format((a, b)),
+                                       History.pair_format((x1, x2)),
+                                       History.pair_format((f1, f2)))
 
             if self.compare(f1, f2):
                 b = x2

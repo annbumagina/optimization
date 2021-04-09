@@ -8,6 +8,9 @@ class AbstractHistory:
         self.size = len(columns)
         self.columns = [[None for y in range(0)] for x in range(len(columns))]
 
+        for c in columns:
+            self.table.float_format[c] = ".7"
+
     def get_column(self, column_index):
         return self.columns[column_index]
 
@@ -40,8 +43,13 @@ class History(AbstractHistory):
         print("Expected: " + str(expected) + "\tResult: " + str(result))
         print("Iterations: " + str(self.iterations))
         print("Calls: " + str(self.calls))
-        print(self.table)
+        print(self.table.get_csv_string(delimiter="\t"))
         print()
+
+    @staticmethod
+    def pair_format(pair, signs=7):
+        return ("%.7f" % pair[0],
+                "%.7f" % pair[1])
 
 
 class GradientHistory(AbstractHistory):
@@ -69,5 +77,5 @@ class GradientHistory(AbstractHistory):
         print("Eps: " + str(eps))
         print("Expected: " + str(expected) + "\tResult: " + str(result))
         print("Iterations: " + str(self.iterations))
-        print(self.table)
+        print(self.table.get_csv_string(delimiter="\t"))
         print()

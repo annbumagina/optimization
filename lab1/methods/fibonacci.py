@@ -1,4 +1,5 @@
 from lab1.methods.abstract_method import AbstractMethod
+from lab1.history.history import History
 
 
 class FibonacciMethod(AbstractMethod):
@@ -27,7 +28,10 @@ class FibonacciMethod(AbstractMethod):
         f2 = self.target(x2)
 
         for i in range(1, n):
-            self.history.add_iteration(1, (a, b), (x1, x2), (f1, f2))
+            self.history.add_iteration(1,
+                                       History.pair_format((a, b)),
+                                       History.pair_format((x1, x2)),
+                                       History.pair_format((f1, f2)))
 
             if self.compare(f1, f2):
                 b = x2
