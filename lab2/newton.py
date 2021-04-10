@@ -31,8 +31,12 @@ class Newton:
         self.history.add_iteration(x, '-')
 
         while True:
+            target_x = self.target(x)
+            grad_x = grad(x)
+            H_x = H(x)
+
             def phi(t):
-                return self.target(x) + grad(x).dot(t - x) + 0.5 * H(x).dot(t - x).dot(t - x)
+                return target_x + grad_x.dot(t - x) + 0.5 * H_x.dot(t - x).dot(t - x)
 
             gradient = FletcherReeves(phi, self.start_point, self.optimize_method, self.eps)
             gradient.compute()
