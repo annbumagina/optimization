@@ -25,7 +25,7 @@ def conjugate_gradient_test():
         gradient = FletcherReeves(eval(f[i]), start[i], compute_result, eps)
         gradient.compute()
         gradient.history.print_history(GoldenSectionMethod.name(), extremum[i], gradient.result, eps, f[i])
-        assert np.linalg.norm(gradient.result - extremum[i]) < 2 * eps
+        assert np.linalg.norm(gradient.result - extremum[i]) < eps
         print("\tOk\n")
         print()
 
@@ -49,7 +49,7 @@ def newton_test():
         gradient = Newton(eval(f[i]), start[i], compute_result, eps)
         gradient.compute()
         gradient.history.print_history(Newton.name(), extremum[i], gradient.result, eps, f[i])
-        assert np.linalg.norm(gradient.result - extremum[i]) < 2 * eps
+        assert np.linalg.norm(gradient.result - extremum[i]) < eps
         print("\tOk\n")
         print()
 
