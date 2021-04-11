@@ -6,6 +6,12 @@ from lab1.methods.golden_section import GoldenSectionMethod
 from lab1.methods.wrapper import wrap_method
 from lab2.conjugate_gradient import FletcherReeves
 
+"""
+    Если вайт лист не пустой, то будут считаться функции только из этого листа
+"""
+
+white_list = [2]
+
 box = {
     1: {
         'function': 'lambda x: 100 * (x[1] - x[0])**2 + (1 - x[0])**2',
@@ -41,7 +47,13 @@ def _test(function: str, start_pos, extremum, opt_method, eps):
 
 
 if __name__ == '__main__':
+    if len(white_list) > 0:
+        print("\n\n\tWarning! White list not empty!")
+
     for i in box:
+        if len(white_list) > 0:
+            if i not in white_list:
+                continue
         print()
         print("#########################START##################################")
         print()
