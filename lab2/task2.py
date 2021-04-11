@@ -64,7 +64,7 @@ if __name__ == '__main__':
                     while p.is_alive():
                         pass
                 except IndexError:
-                    print("\n\tTest failed!\n")
+                    print("\n\tTest failed! Overflow encountered in double_scalars! \n")
                     print("Fail compute function: " + box[i]['function'] + " in start: " + str(start))
                     print()
             print()
