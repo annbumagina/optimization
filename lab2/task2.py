@@ -16,7 +16,8 @@ box = {
     2: {
         'function': 'lambda x: 100 * (x[1] - x[0]**2)**2 + (1 - x[0])**2',
         'extremum': np.array([1, 1]),
-        'starts': [np.array([1, 1]), np.array([2, 2]), np.array([10, 10]), np.array([0, 0]), np.array([-3, 3])],
+        'starts': [np.array([1, 1]), np.array([2, 2]), np.array([10, 10]), np.array([0, 0]), np.array([-3, 3]),
+                   np.array([1, 3]), np.array([0.5, 1])],
     }
 }
 
