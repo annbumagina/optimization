@@ -32,7 +32,7 @@ for n in n_list:
             return sum([a[t] * x[t] * x[t] for t in range(n)])
 
 
-        gradient = Gradient(target, start_point, wrap_method(GoldenSectionMethod), eps, "min")
+        gradient = Gradient(target, start_point, wrap_method(GoldenSectionMethod), eps)
         gradient.compute()
         row.append(gradient.history.iterations)
 

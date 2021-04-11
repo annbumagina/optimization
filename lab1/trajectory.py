@@ -32,7 +32,7 @@ for i in range(len(all_f)):
     print("Compute: ", f)
     for method_constructor in method_constructors:
         compute_result = wrap_method(method_constructor)
-        gradient = Gradient(eval(f), start[i], compute_result, eps, "min")
+        gradient = Gradient(eval(f), start[i], compute_result, eps)
         gradient.compute()
         x, z = makeData(eval(f), x_ranges[i])
         pylab.contourf(x[0], x[1], z)

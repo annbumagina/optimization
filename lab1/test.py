@@ -75,7 +75,7 @@ def gradient_decent_simple():
         for method_constructor in method_constructors:
             print("\tmethod: ", method_constructor.name())
             compute_result = wrap_method(method_constructor)
-            gradient = Gradient(eval(f[i]), start[i], compute_result, eps, "min")
+            gradient = Gradient(eval(f[i]), start[i], compute_result, eps)
             gradient.compute()
             gradient.history.print_history(method_constructor.name(), extremum[i], gradient.result, eps, f[i])
             assert np.linalg.norm(gradient.result - extremum[i]) < eps
