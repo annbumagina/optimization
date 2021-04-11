@@ -31,11 +31,11 @@ def _test(function: str, start_pos, extremum, opt_method, eps):
     gradient = FletcherReeves(eval(function), start_pos, compute_result, eps)
     gradient.compute()
     gradient.history.print_history(opt_method.name(), extremum, gradient.result, eps, function)
-    # assert np.linalg.norm(gradient.result - extremum) < eps
 
-    # ЧТО-ТО тут ассерты не работают, падает на них
-
-    print("\tTest completed!\n")
+    if np.linalg.norm(gradient.result - extremum) < eps:
+        print("\tTest completed!\n")
+    else:
+        print("\n\tTest failed! " + "expected: " + str(extremum) + " result: " + str(gradient.result) + " \n")
     print()
 
 
