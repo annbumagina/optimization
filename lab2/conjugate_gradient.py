@@ -31,7 +31,7 @@ class FletcherReeves:
             def for_optimize(t):
                 return self.target(x + t * vector)
 
-            alpha = self.optimize_method(for_optimize, 0, 1000, self.eps, lambda f1, f2: f1 < f2)
+            alpha = self.optimize_method(for_optimize, 0, 0.1, self.eps, lambda f1, f2: f1 < f2)
             xnew = x + alpha * vector
 
             self.history.add_iteration(xnew, alpha, np.linalg.norm(vector))
