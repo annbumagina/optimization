@@ -1,16 +1,20 @@
 import numpy as np
 import time as time
 import multiprocessing
+import math
+from memory_profiler import profile
 
 from lab1.methods.golden_section import GoldenSectionMethod
 from lab1.methods.wrapper import wrap_method
 from lab2.conjugate_gradient import FletcherReeves
+from lab2.newton import  Newton
+from lab1.gradient.gradient import Gradient
 
 """
     Если вайт лист не пустой, то будут считаться функции только из этого листа
 """
 
-white_list = [2]
+white_list = [1]
 
 box = {
     1: {
@@ -24,6 +28,12 @@ box = {
         'extremum': np.array([1, 1]),
         'starts': [np.array([1, 1]), np.array([2, 2]), np.array([10, 10]), np.array([0, 0]), np.array([-3, 3]),
                    np.array([1, 3]), np.array([0.5, 1])],
+    },
+    3: {
+        'function': 'lambda x: 2 * math.exp((-(x[0] - 1) / 2)**2 - ((x[1] - 1) / 1)**2) '
+                    '+ 3 * math.exp((-(x[0] - 2) / 3)**2 - ((x[1] - 3) / 2)**2)',
+        'extremum': np.array([0, 0]),
+        'starts': [np.array([0, 0]), np.array([-5, 5])],
     }
 }
 
@@ -32,12 +42,13 @@ methods = [GoldenSectionMethod]
 epsilon = 0.00001
 
 
+@profile
 def _test(function: str, start_pos, extremum, opt_method, eps):
     print("Testing function:", function)
     compute_result = wrap_method(opt_method)
-    gradient = FletcherReeves(eval(function), start_pos, compute_result, eps)
+    gradient = Gradient(eval(function), start_pos, compute_result, eps)
     gradient.compute()
-    gradient.history.print_history(opt_method.name(), extremum, gradient.result, eps, function)
+    # gradient.history.print_history(opt_method.name(), extremum, gradient.result, eps, function)
 
     if np.linalg.norm(gradient.result - extremum) < eps:
         print("\tTest completed!\n")
