@@ -19,6 +19,10 @@ class Gradient:
         self.result = None
         self.history = GradientHistory(['x', 'fgrad', 'alpha'])
 
+    @staticmethod
+    def name():
+        return "gradient"
+
     def compute(self):
         fgrad = nd.Gradient(self.target)
         x = self.start_point

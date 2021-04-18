@@ -20,6 +20,10 @@ class FletcherReeves:
         self.result = None
         self.history = GradientHistory(['x', 'alpha', 'vector'], ops=ops)
 
+    @staticmethod
+    def name():
+        return "conjugate gradient"
+
     def compute(self):
         fgrad = nd.Gradient(self.target)
         x = self.start_point
