@@ -52,10 +52,21 @@ class History(AbstractHistory):
                 "%.7f" % pair[1])
 
 
+class Operations:
+    def __init__(self):
+        self.operations = 0
+
+    def op(self, cnt):
+        self.operations = self.operations + cnt
+
+
 class GradientHistory(AbstractHistory):
-    def __init__(self, columns):
+    def __init__(self, columns, ops=None):
         super().__init__(columns)
         self.iterations = 0
+        self.operations = Operations()
+        if ops is not None:
+            self.operations = ops
 
     def add_iteration(self, *args):
         if len(args) + 1 != self.size:
@@ -64,6 +75,9 @@ class GradientHistory(AbstractHistory):
         self.iterations = self.iterations + 1
         for i in range(len(args)):
             self.columns[i + 1].append(args[i])
+
+    def op(self, cnt):
+        self.operations.op(cnt)
 
     def print_history(self, method_name: str, expected, result, eps: float, function: str):
         for i in range(self.iterations):
@@ -76,6 +90,7 @@ class GradientHistory(AbstractHistory):
         print("Function: " + function)
         print("Eps: " + str(eps))
         print("Expected: " + str(expected) + "\tResult: " + str(result))
+        print("Operations: " + str(self.operations.operations))
         print("Iterations: " + str(self.iterations))
         print(self.table.get_csv_string(delimiter="\t"))
         print()

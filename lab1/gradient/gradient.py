@@ -32,6 +32,7 @@ class Gradient:
             alpha = self.optimize_method(for_optimize, 0, 1000, self.eps, lambda f1, f2: f1 < f2)
             xnew = x - alpha * fgrad(x)
 
+            self.history.op(x.size * 2)
             self.history.add_iteration(xnew, fgrad(x), alpha)
 
             if np.linalg.norm(xnew - x) < self.eps:

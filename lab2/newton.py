@@ -38,7 +38,7 @@ class Newton:
             def phi(t):
                 return target_x + grad_x.dot(t - x) + 0.5 * H_x.dot(t - x).dot(t - x)
 
-            gradient = FletcherReeves(phi, self.start_point, self.optimize_method, self.eps)
+            gradient = FletcherReeves(phi, self.start_point, self.optimize_method, self.eps, ops=self.history.operations)
             gradient.compute()
             xt = gradient.result
 
@@ -47,6 +47,8 @@ class Newton:
 
             h = self.optimize_method(psi, 0, 1000, self.eps, lambda f1, f2: f1 < f2)
             xnew = x + h * (xt - x)
+
+            self.history.op(x.size * 2)
             self.history.add_iteration(xnew, h)
 
             if np.linalg.norm(xnew - x) < self.eps:
