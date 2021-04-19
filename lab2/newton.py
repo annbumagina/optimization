@@ -36,7 +36,11 @@ class Newton:
             H_x = H(x)
 
             def phi(t):
-                return target_x + grad_x.dot(t - x) + 0.5 * H_x.dot(t - x).dot(t - x)
+                n = x.size
+                self.history.op(n)
+                u = t - x
+                self.history.op(n + 2*n-1 + n + n + n*(2*n-1) + 2*n-1)
+                return target_x + grad_x.dot(u) + 0.5 * H_x.dot(u).dot(u)
 
             gradient = FletcherReeves(phi, self.start_point, self.optimize_method, self.eps, ops=self.history.operations)
             gradient.compute()

@@ -11,7 +11,7 @@ from lab2.newton import Newton
 
 
 methods = [Gradient, FletcherReeves, Newton]
-f = ["lambda x: 10 * x[0] * x[0] + x[1] * x[1] + 2 * x[1]"]
+f = ["lambda x: 10 * x[0] * x[0] + x[1] * x[1] + 2 * x[1]", 'lambda x: (x[1] - x[0]**2)**2 + (1 - x[0])**2']
 start = [np.array([10, 10.]), np.array([10, 10.])]
 extremum = [np.array([0, -1.]), np.array([1, 1])]
 eps = 0.0001

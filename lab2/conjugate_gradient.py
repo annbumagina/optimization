@@ -34,6 +34,7 @@ class FletcherReeves:
 
         while True:
             def for_optimize(t):
+                self.history.op(x.size * 2)
                 return self.target(x + t * vector)
 
             alpha = self.optimize_method(for_optimize, 0, 0.1, self.eps, lambda f1, f2: f1 < f2)
