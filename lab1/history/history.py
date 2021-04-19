@@ -79,7 +79,7 @@ class GradientHistory(AbstractHistory):
     def op(self, cnt):
         self.operations.op(cnt)
 
-    def print_history(self, method_name: str, expected, result, eps: float, function: str, acc: float = None, mem=None):
+    def print_history(self, method_name: str, expected, result, eps: float, function: str, acc: float = None):
         for i in range(self.iterations):
             row = []
             for column in self.columns:
@@ -91,10 +91,10 @@ class GradientHistory(AbstractHistory):
         print("Eps: " + str(eps))
         if acc is not None:
             print("Accuracy: " + str(acc))
-        if mem is not None:
-            print("Memory usage : " + str(mem) + " MiB")
         print("Expected: " + str(expected) + "\tResult: " + str(result))
         print("Operations: " + str(self.operations.operations))
         print("Iterations: " + str(self.iterations))
-        print(self.table.get_csv_string(delimiter="\t"))
+        rows = sum(1 for _ in self.table)
+        step = rows // 10 + 1
+        print('\n'.join(self.table.get_csv_string(delimiter="\t").splitlines()[::step]))
         print()

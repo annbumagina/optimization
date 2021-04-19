@@ -14,7 +14,7 @@ from lab1.gradient.gradient import Gradient
     Если вайт лист не пустой, то будут считаться функции только из этого листа
 """
 
-white_list = [2]
+white_list = []
 
 box = {
     1: {
@@ -33,7 +33,7 @@ box = {
         'function': 'lambda x: -(2 * math.exp(-((x[0] - 1) / 2)**2 - ((x[1] - 1) / 1)**2) '
                     '+ 3 * math.exp(-((x[0] - 2) / 3)**2 - ((x[1] - 3) / 2)**2))',
         'extremum': np.array([1.2630, 1.33439]),
-        'starts': [np.array([0, 0]), np.array([3, 0])],
+        'starts': [np.array([1, 1]), np.array([2, -1]), np.array([5, 5]), np.array([0, 0]), np.array([3, 0])],
     }
 }
 
@@ -47,8 +47,12 @@ def _test(method, function: str, start_pos, extremum, eps):
     print("Testing function:", function)
     compute_result = wrap_method(GoldenSectionMethod)
     gradient = method(eval(function), start_pos, compute_result, eps)
+    start = time.time()
     gradient.compute()
-    #gradient.history.print_history(method.name(), extremum, gradient.result, eps, function)
+    end = time.time()
+    print("Time spent: " + str(end - start) + " sec")
+    acc = np.linalg.norm(gradient.result - extremum)
+    gradient.history.print_history(method.name(), extremum, gradient.result, eps, function, acc)
 
     if np.linalg.norm(gradient.result - extremum) < 0.1:
         print("\tTest completed!\n")
