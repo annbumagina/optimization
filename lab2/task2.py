@@ -38,7 +38,6 @@ box = {
 }
 
 methods = [Gradient, FletcherReeves, Newton]
-# epsilon = 0.0001 fix
 epsilon = 0.00001
 
 
