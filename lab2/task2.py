@@ -14,7 +14,7 @@ from lab1.gradient.gradient import Gradient
     Если вайт лист не пустой, то будут считаться функции только из этого листа
 """
 
-white_list = [2]
+white_list = []
 
 box = {
     1: {
@@ -33,12 +33,11 @@ box = {
         'function': 'lambda x: -(2 * math.exp(-((x[0] - 1) / 2)**2 - ((x[1] - 1) / 1)**2) '
                     '+ 3 * math.exp(-((x[0] - 2) / 3)**2 - ((x[1] - 3) / 2)**2))',
         'extremum': np.array([1.2630, 1.33439]),
-        'starts': [np.array([0, 0]), np.array([3, 0])],
+        'starts': [np.array([0, 0]), np.array([3, 0]), np.array([-1, 0]), np.array([-3, 3]), np.array([1, 1])],
     }
 }
 
 methods = [Gradient, FletcherReeves, Newton]
-# epsilon = 0.0001 fix
 epsilon = 0.00001
 
 
