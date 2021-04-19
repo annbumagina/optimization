@@ -47,9 +47,10 @@ class Newton:
             xt = gradient.result
 
             def psi(t):
+                self.history.op(x.size * 3)
                 return self.target(x + t * (xt - x))
 
-            h = self.optimize_method(psi, 0, 1000, self.eps, lambda f1, f2: f1 < f2)
+            h = self.optimize_method(psi, 0, 1., self.eps, lambda f1, f2: f1 < f2)
             xnew = x + h * (xt - x)
 
             self.history.op(x.size * 2)

@@ -30,15 +30,17 @@ class Gradient:
         self.history.add_iteration(x, fgrad(x), '-')
 
         while True:
+            grad_x = fgrad(x)
+
             def for_optimize(t):
                 self.history.op(x.size * 2)
-                return self.target(x - t * fgrad(x))
+                return self.target(x - t * grad_x)
 
-            alpha = self.optimize_method(for_optimize, 0, 1000, self.eps, lambda f1, f2: f1 < f2)
-            xnew = x - alpha * fgrad(x)
+            alpha = self.optimize_method(for_optimize, 0, 1., self.eps, lambda f1, f2: f1 < f2)
+            xnew = x - alpha * grad_x
 
             self.history.op(x.size * 2)
-            self.history.add_iteration(xnew, fgrad(x), alpha)
+            self.history.add_iteration(xnew, grad_x, alpha)
 
             if np.linalg.norm(xnew - x) < self.eps:
                 self.result = xnew
