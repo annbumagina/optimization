@@ -61,3 +61,6 @@ class Newton:
                 break
 
             x = xnew
+
+    def get_points(self):
+        return self.history.get_column(1)

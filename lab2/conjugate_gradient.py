@@ -30,7 +30,7 @@ class FletcherReeves:
         fgrad_x = fgrad(x)
         vector = -fgrad_x
 
-        self.history.add_iteration(x, '-')
+        self.history.add_iteration(x, '-', '-')
 
         while True:
             def for_optimize(t):
