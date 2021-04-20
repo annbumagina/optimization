@@ -26,7 +26,7 @@ x_ranges = [[np.arange(-15, 15.05, 0.05), np.arange(-15, 15.05, 0.05)],
 
 methods = [Gradient, FletcherReeves, Newton]
 epsilon = 0.00001
-for i in range(1, len(all_f)):
+for i in range(len(all_f)):
     f = all_f[i]
     print("Compute: ", f)
     for method in methods:
