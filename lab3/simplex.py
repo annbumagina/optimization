@@ -5,15 +5,16 @@ import numpy as np
     b_x - базисные переменные
     b_v - значение базисных переменных в порядке b_x
     c - коэфиценты функции, которую нужно максимизировать
-    f - целевая функция
+    mode - "max" или "min"
 """
 
 
-class SimplexTable:
-    def __init__(self, A, b_x, b_v, c):
+class SimplexMethod:
+    def __init__(self, A, b_x, b_v, c, mode):
         self.A = A
         self.b_x = b_x
         self.b_v = b_v
+        self.mode = mode
         self.f = c.copy() * (-1)
 
     # получить текущее решение
@@ -26,9 +27,16 @@ class SimplexTable:
 
     # одна итерация симплекс таблицы. Возвращает False, если оптимальное решение уже было достигнуто; True - иначе
     def do_iteration(self):
-        column_idx = np.argmin(self.f)
-        if self.f[column_idx] >= 0:
-            return False
+        if self.mode == 'max':
+            column_idx = np.argmin(self.f)
+            if self.f[column_idx] >= 0:
+                return False
+        elif self.mode == 'min':
+            column_idx = np.argmax(self.f)
+            if self.f[column_idx] <= 0:
+                return False
+        else:
+            raise RuntimeError('Unexpected mode. Current mode: ' + str(self.mode))
 
         m = len(self.A)
 
@@ -54,22 +62,7 @@ class SimplexTable:
         self.f = self.f - self.A[row_idx] * k
         return True
 
-
-if __name__ == '__main__':
-    A = np.array([
-        [2., 3., 6., 1., 0., 0.],
-        [4., 2., 4., 0., 1., 0.],
-        [4., 6., 8., 0., 0., 1.],
-    ])
-    b = np.array([240., 200., 160.])
-    c = np.array([4., 5., 4., 0., 0., 0.])
-    b_x = np.array([3, 4, 5])
-    b_v = np.array([240., 200., 160.])
-
-    simplex_table = SimplexTable(A, b_x, b_v, c)
-    in_process = True
-    while in_process:
-        in_process = simplex_table.do_iteration()
-    solution = simplex_table.get_solution()
-    print("Solution: " + str(solution))
-    print("Max value: " + str(np.dot(c, solution)))
+    def solve(self):
+        in_process = True
+        while in_process:
+            in_process = self.do_iteration()
