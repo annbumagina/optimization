@@ -13,8 +13,9 @@ def test_0():
     ])
     b = np.array([240., 200., 160.])
     c = np.array([4., 5., 4., 0., 0., 0.])
+    basis = np.array([0., 0., 0., 240., 200., 160.])
 
-    simplex_table = SimplexMethod(A, b, c, 'max')
+    simplex_table = SimplexMethod(A, b, c, 'max', basis)
     in_process = True
     while in_process:
         in_process = simplex_table.do_iteration()
@@ -34,8 +35,9 @@ def test_1():
     ])
     b = np.array([4., 4.])
     c = np.array([-6., -1., -4., 5.])
+    basis = np.array([1., 0., 0., 1.])
 
-    simplex_table = SimplexMethod(A, b, c, 'min')
+    simplex_table = SimplexMethod(A, b, c, 'min', basis)
     simplex_table.solve()
     solution = simplex_table.get_solution()
     print("Test 1")
