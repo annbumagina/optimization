@@ -9,22 +9,54 @@ import numpy as np
 
 
 class SimplexMethod:
-    def __init__(self, A, b, c, mode):
+    def __init__(self, A, b, c, mode, basis):
         self.A = A
         self.b = b
         self.mode = mode
+        self.c = c
+        self.basis = basis
+        self.s_x = np.zeros(len(self.A), dtype=int)
+        self.s_v = np.zeros(len(self.A), dtype=float)
+        self.f = np.zeros(len(self.A[0]), dtype=float)
         self.compute_f()
 
     # приводит матрицу к единичной и вычисляет оценки
     def compute_f(self):
-        self.f = self.c.copy() * (-1)
+        m = len(self.A)
+        n = len(self.A[0])
+        s_x = []
+        s_v = []
 
+        t = 0
+        for i in range(n):
+            if self.basis[i] == .0:
+                continue
+
+            self.s_x[t] = i
+            self.s_v[t] = self.basis[i]
+
+            self.A[t] = self.A[t] / self.A[t][i]
+            for p in range(m):
+                if p == t:
+                    continue
+                k = self.A[p][i] / self.A[t][i]
+                self.A[p] = self.A[p] - self.A[t] * k
+
+            t += 1
+
+        for i in range(n):
+            summ = 0.0
+            for j in range(m):
+                summ += self.A[j][i] * self.c[self.s_x[j]]
+            self.f[i] = summ - self.c[i]
 
     # получить текущее решение
     def get_solution(self):
+        print(self.s_x)
+        print(self.s_v)
         solution = np.zeros(len(self.A[0]), dtype=float)
-        for i in range(len(self.b_v)):
-            solution[self.b_x[i]] = self.b_v[i]
+        for i in range(len(self.s_v)):
+            solution[self.s_x[i]] = self.s_v[i]
 
         return solution
 
@@ -45,21 +77,21 @@ class SimplexMethod:
 
         def compute_q(i):
             with np.errstate(divide='ignore'):
-                return abs(np.float64(self.b_v[i]) / np.float64(self.A[i][column_idx]))
+                return abs(np.float64(self.s_v[i]) / np.float64(self.A[i][column_idx]))
 
         Q = np.array([compute_q(i) for i in range(m)])
         row_idx = np.argmin(Q)
 
-        self.b_v[row_idx] = self.b_v[row_idx] / self.A[row_idx][column_idx]
+        self.s_v[row_idx] = self.s_v[row_idx] / self.A[row_idx][column_idx]
         self.A[row_idx] = self.A[row_idx] / self.A[row_idx][column_idx]
-        self.b_x[row_idx] = column_idx
+        self.s_x[row_idx] = column_idx
 
         for i in range(m):
             if i == row_idx:
                 continue
             k = self.A[i][column_idx] / self.A[row_idx][column_idx]
             self.A[i] = self.A[i] - self.A[row_idx] * k
-            self.b_v[i] = self.b_v[i] - self.b_v[row_idx] * k
+            self.s_v[i] = self.s_v[i] - self.s_v[row_idx] * k
 
         k = self.f[column_idx] / self.A[row_idx][column_idx]
         self.f = self.f - self.A[row_idx] * k
