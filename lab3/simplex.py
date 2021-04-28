@@ -24,8 +24,6 @@ class SimplexMethod:
     def compute_f(self):
         m = len(self.A)
         n = len(self.A[0])
-        s_x = []
-        s_v = []
 
         t = 0
         for i in range(n):
