@@ -2,20 +2,23 @@ import numpy as np
 
 """
     A - коэффициенты уравнений
-    b_x - базисные переменные
-    b_v - значение базисных переменных в порядке b_x
+    b - результаты уравнений
     c - коэфиценты функции, которую нужно максимизировать
     mode - "max" или "min"
 """
 
 
 class SimplexMethod:
-    def __init__(self, A, b_x, b_v, c, mode):
+    def __init__(self, A, b, c, mode):
         self.A = A
-        self.b_x = b_x
-        self.b_v = b_v
+        self.b = b
         self.mode = mode
-        self.f = c.copy() * (-1)
+        self.compute_f()
+
+    # приводит матрицу к единичной и вычисляет оценки
+    def compute_f(self):
+        self.f = self.c.copy() * (-1)
+
 
     # получить текущее решение
     def get_solution(self):
