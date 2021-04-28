@@ -15,15 +15,8 @@ def test_0():
     c = np.array([4., 5., 4., 0., 0., 0.])
     basis = np.array([0., 0., 0., 240., 200., 160.])
 
-    simplex_table = SimplexMethod(A, b, c, 'max', basis)
-    in_process = True
-    while in_process:
-        in_process = simplex_table.do_iteration()
-    solution = simplex_table.get_solution()
-    print("Test 0")
-    print("Solution: " + str(solution))
-    print("Max value: " + str(np.dot(c, solution)))
-    print()
+    simplex = SimplexMethod(A, b, c, 'max', basis)
+    print_result(0, simplex, c)
 
 
 # Solution: [0.0, 4.0, 0.0, 0.0]
@@ -37,7 +30,8 @@ def test_1():
     c = np.array([-6., -1., -4., 5.])
     basis = np.array([1., 0., 0., 1.])
 
-    print_result(SimplexMethod(A, b, c, 'min', basis), c)
+    simplex = SimplexMethod(A, b, c, 'min', basis)
+    print_result(1, simplex, c)
 
 
 def test_2():
@@ -47,8 +41,10 @@ def test_2():
     ])
     b = np.array([-4., 0.])
     c = np.array([-1., -2., -3., 1.])
+    basis = np.array([0., 1., 1., 0.])
 
-    print_result(SimplexMethod(A, b, c, 'min'), c)
+    simplex = SimplexMethod(A, b, c, 'min', basis)
+    print_result(2, simplex, c)
 
 
 def test_3():
@@ -59,8 +55,10 @@ def test_3():
     ])
     b = np.array([5., 9., 6.])
     c = np.array([-1., -2., -3., 3., -1.])
+    basis = np.array([0., 0., 1., 2., 1.])
 
-    print_result(SimplexMethod(A, b, c, 'min'), c)
+    simplex = SimplexMethod(A, b, c, 'min', basis)
+    print_result(3, simplex, c)
 
 
 def test_4():
@@ -71,8 +69,10 @@ def test_4():
     ])
     b = np.array([4., -6., 12.])
     c = np.array([-1., -1., -1., 1., -1.])
+    basis = np.array([1., 1., 2., 0., 0.])
 
-    print_result(SimplexMethod(A, b, c, 'min'), c)
+    simplex = SimplexMethod(A, b, c, 'min', basis)
+    print_result(4, simplex, c)
 
 
 def test_5():
@@ -82,8 +82,10 @@ def test_5():
     ])
     b = np.array([0., 11.])
     c = np.array([-1., 4., -3., 10.])
+    basis = np.array([])
 
-    print_result(SimplexMethod(A, b, c, 'min'), c)
+    simplex = SimplexMethod(A, b, c, 'min', basis)
+    print_result(5, simplex, c)
 
 
 def test_6():
@@ -93,8 +95,10 @@ def test_6():
     ])
     b = np.array([3., 4.])
     c = np.array([-1., 5., 1., -1., 0., 0.])
+    basis = np.array([])
 
-    print_result(SimplexMethod(A, b, c, 'min'), c)
+    simplex = SimplexMethod(A, b, c, 'min', basis)
+    print_result(5, simplex, c)
 
 
 def test_7():
@@ -105,14 +109,16 @@ def test_7():
     ])
     b = np.array([10., 20., 30.])
     c = np.array([-1., -1., 1., -1., 2.])
+    basis = np.array([])
 
-    print_result(SimplexMethod(A, b, c, 'min'), c)
+    simplex = SimplexMethod(A, b, c, 'min', basis)
+    print_result(5, simplex, c)
 
 
-def print_result(simplex_table, c):
+def print_result(test_id, simplex_table, c):
     simplex_table.solve()
     solution = simplex_table.get_solution()
-    print("Test 1")
+    print("Test " + str(test_id))
     print("Solution: " + str(solution))
     print("Min value: " + str(np.dot(c, solution)))
     print()
@@ -121,7 +127,7 @@ def print_result(simplex_table, c):
 if __name__ == '__main__':
     test_0()
     test_1()
-    # test_2()
+    test_2()
     # test_3()
     # test_4()
     # test_5()

@@ -52,8 +52,6 @@ class SimplexMethod:
 
     # получить текущее решение
     def get_solution(self):
-        print(self.s_x)
-        print(self.s_v)
         solution = np.zeros(len(self.A[0]), dtype=float)
         for i in range(len(self.s_v)):
             solution[self.s_x[i]] = self.s_v[i]
