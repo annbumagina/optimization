@@ -34,6 +34,8 @@ def test_1():
     print_result(1, simplex, c)
 
 
+# Solution: [2.0, 2.0, 0.0, 0.0]
+# Min value: -6.0
 def test_2():
     A = np.array([
         [1., -3., -1., -2.],
@@ -47,6 +49,8 @@ def test_2():
     print_result(2, simplex, c)
 
 
+# Solution: [3.0, 2.0, 4.0, 0.0, 0.0]
+# Min value: -19.0
 def test_3():
     A = np.array([
         [1., 1., 0., 2., 1.],
@@ -61,6 +65,8 @@ def test_3():
     print_result(3, simplex, c)
 
 
+# Solution: [4.0, 0.0, 0.0, 1.0, 7.0]
+# Min value: -10.0
 def test_4():
     A = np.array([
         [1., 1., 2., 0., 0.],
@@ -75,6 +81,8 @@ def test_4():
     print_result(4, simplex, c)
 
 
+# Solution: [1.0, 0.0, 1.0, 0.0]
+# Min value: -4.0
 def test_5():
     A = np.array([
         [1., 1., -1., -10.],
@@ -88,6 +96,8 @@ def test_5():
     print_result(5, simplex, c)
 
 
+# Solution: [7/3, 0.0, 0.0, 2/3]
+# Min value: -3.0
 def test_6():
     A = np.array([
         [1., 3., 3., 1., 1., 0.],
@@ -101,6 +111,8 @@ def test_6():
     print_result(5, simplex, c)
 
 
+# Solution: [0, 0, 10, 0, 0]
+# Min value: 10.0
 def test_7():
     A = np.array([
         [3., 1., 1., 1., -2.],
