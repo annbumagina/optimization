@@ -100,14 +100,15 @@ def test_5():
 # Min value: -3.0
 def test_6():
     A = np.array([
-        [1., 3., 3., 1., 1., 0.],
-        [2., 0., 3., -1., 0., 1.]
+        [1., 3., 3., 1.],
+        [2., 0., 3., -1.]
     ])
     b = np.array([3., 4.])
-    c = np.array([-1., 5., 1., -1., 0., 0.])
+    c = np.array([-1., 5., 1., -1.])
+    comp = np.array([1, 1])
     basis = np.array([])
 
-    simplex = SimplexMethod(A, b, c, 'min', basis)
+    simplex = SimplexMethod(A, b, c, 'min', basis, comp)
     print_result(6, simplex, c)
 
 

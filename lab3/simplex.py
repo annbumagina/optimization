@@ -7,16 +7,19 @@ import numpy as np
     b - результаты уравнений
     c - коэфиценты функции, которую нужно максимизировать
     mode - "max" или "min"
+    comp - compare 0 - eq, 1 - less, -1 - greater
 """
 
 
 class SimplexMethod:
-    def __init__(self, A, b, c, mode, basis):
+    def __init__(self, A, b, c, mode, basis, comp=None):
         self.A = A
         self.b = b
         self.mode = mode
         self.c = c
         self.basis = basis
+
+        self.extra = self.make_equality(comp)
         self.s_x = np.zeros(len(self.A), dtype=int)
         self.s_v = np.zeros(len(self.A), dtype=float)
         self.f = np.zeros(len(self.A[0]), dtype=float)
@@ -24,6 +27,28 @@ class SimplexMethod:
         if len(basis) == 0:
             self.find_basis()
         self.compute_f()
+
+    def make_equality(self, comp):
+        new_var = 0
+        if comp is not None and len(comp[comp != 0]) != 0:
+            new_var = len(comp[comp != 0])
+            m = len(self.A)
+            n = len(self.A[0])
+
+            A = np.zeros((m, n + new_var))
+            c = np.zeros(n + new_var)
+            A[:, :n] = self.A
+            c[:n] = self.c
+
+            t = 0
+            for i in range(m):
+                if comp[i] != 0:
+                    A[i, n + t] = comp[i]
+                    t += 1
+
+            self.A = A
+            self.c = c
+        return new_var
 
     def find_basis(self):
         m = len(self.A)
@@ -89,6 +114,8 @@ class SimplexMethod:
         for i in range(len(self.s_v)):
             solution[self.s_x[i]] = self.s_v[i]
 
+        if self.extra > 0:
+            solution = solution[:-self.extra]
         return solution
 
     # одна итерация симплекс таблицы. Возвращает False, если оптимальное решение уже было достигнуто; True - иначе
