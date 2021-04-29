@@ -1,3 +1,5 @@
+import copy
+
 import numpy as np
 
 """
@@ -18,7 +20,29 @@ class SimplexMethod:
         self.s_x = np.zeros(len(self.A), dtype=int)
         self.s_v = np.zeros(len(self.A), dtype=float)
         self.f = np.zeros(len(self.A[0]), dtype=float)
+
+        if len(basis) == 0:
+            self.find_basis()
         self.compute_f()
+
+    def find_basis(self):
+        m = len(self.A)
+        n = len(self.A[0])
+
+        b = copy.deepcopy(self.b)
+        A = np.zeros((m, n + m))
+        c = np.zeros(n + m)
+        basis = np.zeros(n + m)
+
+        c[n:] = -1.
+        basis[n:] = b
+        A[:, :n] = self.A
+        for i in range(m):
+            A[i, n + i] = 1.
+
+        simplex = SimplexMethod(A, b, c, 'max', basis)
+        simplex.solve()
+        self.basis = simplex.get_solution()[:n]
 
     # приводит матрицу к единичной и вычисляет оценки
     def compute_f(self):
@@ -87,7 +111,7 @@ class SimplexMethod:
                 return np.float64(self.s_v[i]) / np.float64(self.A[i][column_idx])
 
         Q = np.array([compute_q(i) for i in range(m)])
-        Q[Q < 0] = np.inf
+        Q[Q <= 0] = np.inf
         row_idx = np.argmin(Q)
 
         self.s_v[row_idx] = self.s_v[row_idx] / self.A[row_idx][column_idx]

@@ -108,7 +108,7 @@ def test_6():
     basis = np.array([])
 
     simplex = SimplexMethod(A, b, c, 'min', basis)
-    print_result(5, simplex, c)
+    print_result(6, simplex, c)
 
 
 # Solution: [0, 0, 10, 0, 0]
@@ -124,7 +124,7 @@ def test_7():
     basis = np.array([])
 
     simplex = SimplexMethod(A, b, c, 'min', basis)
-    print_result(5, simplex, c)
+    print_result(7, simplex, c)
 
 
 def print_result(test_id, simplex_table, c):
@@ -142,6 +142,6 @@ if __name__ == '__main__':
     test_2()
     test_3()
     test_4()
-    # test_5()
-    # test_6()
-    # test_7()
+    test_5()
+    test_6()
+    test_7()
